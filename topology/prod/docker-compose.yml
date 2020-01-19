@@ -20,6 +20,7 @@ services:
       - DB_PORT=3306
       - DB_USERNAME=$DB_USERNAME
       - DB_PASSWORD=$ROOT_PASSWORD
+      - HIBERNATE_MODE=$HIBERNATE_MODE
       - TOKEN_SECRET=$TOKEN_SECRET
     labels:
       - traefik.enable=true
@@ -36,6 +37,7 @@ services:
       - DB_PORT=3306
       - DB_USERNAME=$DB_USERNAME
       - DB_PASSWORD=$ROOT_PASSWORD
+      - HIBERNATE_MODE=$HIBERNATE_MODE
       - TOKEN_SECRET=$TOKEN_SECRET
     labels:
       - traefik.enable=true
