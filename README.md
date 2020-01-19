@@ -197,11 +197,65 @@ The downside is that it's kinda unpractical to rollback data.
 
 ### Performance tests with JMeter
 
-TODO
+To experiment the performance of our app, we compared data from our implemented page size to a ridiculously huge one. Below is our raw data from those tests. It might be a bit overwhelming to read so let's discuss it in the paragraph after the two tables. We begin our Benchmark with 5000 request with pagnination and 1000 without pagination.
 
 * number
+
+#### With 10 per page
+
+| 5000 request           |           |         |         |              |
+| ---------------------- | --------- | ------- | ------- | ------------ |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 5000      | 78925   | 0,9436  | 240,7        |
+| TOTAL                  | 5000      | 78925   | 0,9436  | 240,7        |
+|                        |           |         |         |              |
+| 3000 request           |           |         |         |              |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 3000      | 49804   | 0       | 1792         |
+| TOTAL                  | 3000      | 49804   | 0       | 1792         |
+|                        |           |         |         |              |
+| 2000 request           |           |         |         |              |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 2000      | 19959   | 0       | 1792         |
+| TOTAL                  | 2000      | 19959   | 0       | 1792         |
+|                        |           |         |         |              |
+| 1000 request           |           |         |         |              |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 1000      | 10536   | 0       | 1792         |
+| TOTAL                  | 1000      | 10536   | 0       | 1792         |
+
+#### Without
+
+| 1000 request           |           |         |         |              |
+| ---------------------- | --------- | ------- | ------- | ------------ |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 1000      | 94338   | 0,648   | 602892,7     |
+| TOTAL                  | 1000      | 94338   | 0,648   | 602892,7     |
+|                        |           |         |         |              |
+| 500 request            |           |         |         |              |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 500       | 59947   | 0,616   | 657672,2     |
+| TOTAL                  | 500       | 59947   | 0,616   | 657672,2     |
+|                        |           |         |         |              |
+| 100 request            |           |         |         |              |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 100       | 19985   | 0,12    | 1506615,1    |
+| TOTAL                  | 100       | 19985   | 0,12    | 1506615,1    |
+|                        |           |         |         |              |
+| 50 request             |           |         |         |              |
+| Label                  | # Samples | Average | Error % | Avg.   Bytes |
+| HTTP Request get trips | 50        | 9777    | 0       | 1712048,7    |
+| TOTAL                  | 50        | 9777    | 0       | 1712048,7    |
+
 * Graphs
+
+![jmeter-graph](./report-img/jmeter-graphe.png)
+
 * Explanations
+
+We can see here that we have better performance with pagnination because we have less data to load. We started our test by making a lot of requests and then decreasing the number of requests until we get to the point where we have little or no query error at all.
+
+With the pagnination we have got error rate at 0 from 3000 requests. Without pagnination we cannot reach more than 100 requests.
 
 ## Known bugs and limitations
 

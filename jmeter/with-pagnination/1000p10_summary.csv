@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+HTTP Request get trips,1000,10536,1236,19792,5384.93,0.000%,48.42146,84.74,16.46,1792.0
+TOTAL,1000,10536,1236,19792,5384.93,0.000%,48.42146,84.74,16.46,1792.0
