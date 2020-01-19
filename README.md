@@ -249,7 +249,7 @@ To experiment the performance of our app, we compared data from our implemented 
 
 * Graphs
 
-![jmeter-graph](./report-img/jmeter-graphe.png)
+![jmeter-graph](./report-img/jmeter-graphe.PNG)
 
 * Explanations
 
