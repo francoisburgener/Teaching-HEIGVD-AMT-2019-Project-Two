@@ -107,6 +107,47 @@ Let's dive into the implementation
 * Entities : Here we have our JPA Entities. Simple POJOs that are managed by the Entity Manager
 * Repositories: The repositories, used as an abstraction layer over the DB. 
 
+![implementation2](./report-img/implementation2.jpg)
+
+And similarly, we did it in the same fashion for the second API.
+
+#### Some details
+
+Let's see a bit of code to understand some choices we made
+
+```java
+@Entity
+@Table(name = "Trip")
+public class TripEntity implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idTrip")
+    private Integer idTrip;
+
+    ...
+
+    @ManyToOne
+    @JoinColumn(name = "Reason_idReason")
+    private ReasonEntity reasonEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "Country_idCountry")
+    private  CountryEntity countryEntity;
+}
+```
+
+Here, we used the annotation @ManyToOne to specify that this POJO field is a reference to another Entity, which corresponds to a join in the database. 
+
+___
+
+```java
+public interface TripRepository extends CrudRepository<TripEntity, Integer> {
+    Page<TripEntity> findAllByEmailEquals(String string, Pageable pageable);
+}
+```
+
+In this small extract, we see the code of a repository. We used a Pageable parameter, and a Page return type to implement the paging. As we can see, it's by far easier in comparison to the previous project.
+
 ## Testing strategy
 
 ### Running tests
@@ -133,7 +174,26 @@ And that's it. For the second API we have a similar procedure with two scripts: 
 
 ### Cucumber tests
 
-TODO Explain the tools and the value of the tests
+We implemented a few tests with cucumber:
+
+Tests from travel API:
+
+![test-travel](./report-img/test-travel.png)
+
+Tests from authentication API:
+
+![test-auth](./report-img/test-auth.png)
+
+The first thing we tested was the status codes. It's an elementary thing to do. Then, we tested the behaviors: 
+
+* Does it create the thing correctly? 
+* Does it return the things we expect?
+
+Those tests allow us to give some feeling and confidence between what is implemented and the expectations of it (the specification). 
+
+It is a very flexible way to create tests. Once you have a few " sentences " of steps, it's really easy to reuse the code.
+
+The downside is that it's kinda unpractical to rollback data.
 
 ### Performance tests with JMeter
 
@@ -145,7 +205,10 @@ TODO
 
 ## Known bugs and limitations
 
-todo
+* Since in both databases and APIs we manage user entities that are linked, we should be able in theory to synchronously add or delete in both. 
+  * Actually we can't and made a workaround by just creating the user in the first API (auth). In the second one (travel), as long as the token is valid, we test for the existance of the user entity and if none is found, then we create it.
+  * Rabbitmq should be used instead to solve this problem correctly. It would be a nice improvement.
+* 
 
 ## Dev environment
 
